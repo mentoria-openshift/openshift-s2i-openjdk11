@@ -15,17 +15,17 @@ fi
 # Restore artifacts from the previous build (if they exist).
 #
 if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
-  echo "---> Restaurando artefatos de compilação..."
+  echo "--> Restaurando artefatos de compilação..."
   shopt -s dotglob
   mv /tmp/maven-artifacts ~/.m2
   shopt -u dotglob
 fi
 
-echo "---> Instalando código fonte da aplicação..."
+echo "--> Instalando código fonte da aplicação..."
 cp -Rf /tmp/src/. /opt/java-app
 
-echo "---> Executando testes unitários da aplicação..."
-exec mvn test -f /opt/java-app/pom.xml
+echo "--> Executando testes unitários da aplicação..."
+mvn test -f /opt/java-app/pom.xml
 
-echo "---> Compilando código fonte da aplicação..."
-exec mvn clean install spring-boot:repackage -f /opt/java-app/pom.xml
+echo "--> Compilando código fonte da aplicação..."
+mvn clean install -f /opt/java-app/pom.xml
