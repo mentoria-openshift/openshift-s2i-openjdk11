@@ -1,0 +1,18 @@
+#!/bin/bash -e
+#
+# S2I run script for the 'openjdk' image.
+# The run script executes the server that runs your application.
+#
+# For more information see the documentation:
+#	https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
+#
+
+ls -R /opt
+war_count=`ls -1 /opt/java-app/target/*.war 2>/dev/null | wc -l`
+if [ $war_count != 0 ]; then 
+    echo "---> Iniciando aplicação a partir de arquivo WAR"
+    exec java -jar /opt/java-app/target/*.war
+else
+    echo "---> Iniciando aplicação a partir de arquivo JAR"
+    exec java -jar /opt/java-app/target/*.jar
+fi 
