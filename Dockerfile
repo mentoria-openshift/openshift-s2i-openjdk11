@@ -20,8 +20,9 @@ RUN yum update -y && \
     tar xvzf apache-maven-3.6.3-bin.tar.gz && \
     mv apache-maven-3.6.3 /opt/maven && \
     mv jdk-11.0.2 /opt/openjdk11 && \
-    chown -R 1001:0 /opt && \
-    chmod -R g=u /opt
+    mkdir /.m2 && \
+    chown -R 1001:0 /opt /.m2 && \
+    chmod -R g=u /opt /.m2
 
 COPY ./s2i/bin/ /usr/libexec/s2i
 

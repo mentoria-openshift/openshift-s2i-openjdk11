@@ -9,7 +9,7 @@ fi
 if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
   echo "--> Restaurando artefatos de compilação..."
   shopt -s dotglob
-  mv /tmp/maven-artifacts ~/.m2
+  mv /tmp/maven-artifacts /.m2
   shopt -u dotglob
 fi
 
