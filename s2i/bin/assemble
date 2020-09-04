@@ -1,19 +1,11 @@
 #!/bin/bash -e
-#
-# S2I assemble script for the 'openjdk' image.
-# The 'assemble' script builds your application source so that it is ready to run.
-#
-# For more information refer to the documentation:
-#	https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
-#
 
-# If the 'openjdk' assemble script is executed with the '-h' flag, print the usage.
+# Caso o script seja executado com -h, instruções são exibidas
 if [[ "$1" == "-h" ]]; then
 	exec /usr/libexec/s2i/usage
 fi
 
-# Restore artifacts from the previous build (if they exist).
-#
+# Restaura dependências do maven para a pasta do .m2
 if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
   echo "--> Restaurando artefatos de compilação..."
   shopt -s dotglob
@@ -21,11 +13,14 @@ if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
   shopt -u dotglob
 fi
 
+# Copia o código fonte para sua pasta
 echo "--> Instalando código fonte da aplicação..."
 cp -Rf /tmp/src/. /opt/java-app
 
+# Executa os testes
 echo "--> Executando testes unitários da aplicação..."
 mvn test -f /opt/java-app/pom.xml
 
+# Compila a aplicação
 echo "--> Compilando código fonte da aplicação..."
-mvn clean install -f /opt/java-app/pom.xml
+mvn clean install -DskipTests -f /opt/java-app/pom.xml

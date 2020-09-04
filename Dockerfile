@@ -1,6 +1,6 @@
 FROM registry.access.redhat.com/ubi8/ubi:8.0
 
-LABEL maintainer="Your Name <your@email.com>" \
+LABEL maintainer="Seu Nome <voce@email.com>" \
     io.k8s.description="Uma imagem para compilação de aplicações Maven escritas com o OpenJDK 11" \
     io.k8s.display-name="OpenJDK 11 S2I Builder" \
     io.openshift.expose-services="8080:http" \
